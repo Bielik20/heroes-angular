@@ -1,36 +1,27 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
 
 import { Quest } from '../_models/quest';
+import { ApiBaseService } from './api-base.service';
 
 @Injectable()
 export class QuestService {
 
-  private questsUrl = 'api/quests';  // URL to web api
-  private headers = new Headers({ 'Content-Type': 'application/json' });
+  private questsUrl = this.apiBase.apiUrl + '/quests';  // URL to web api
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private apiBase: ApiBaseService) { }
 
-  getAll(): Promise<Quest[]> {
-    return this.http.get(this.questsUrl)
-      .toPromise()
-      .then(response => response.json().data as Quest[])
-      .catch(this.handleError);
+  getAll(): Observable<Quest[]> {
+    return this.http.get(this.questsUrl, { headers: this.apiBase.headers() })
+      .map(response => response.json())
   }
 
-  getOwnedByHero(hero_id: number): Promise<Quest[]> {
-    const url = `${this.questsUrl}?hero_id=${hero_id}`;
-    return this.http.get(url)
-      .toPromise()
-      .then(response => response.json().data as Quest[])
-      .catch(this.handleError);
-  }
-
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    return Promise.reject(error.message || error);
+  getOwnedByHero(hero_id: number): Observable<Quest[]> {
+    const url = `${this.questsUrl}/ownedbyhero/${hero_id}`;
+    return this.http.get(url, { headers: this.apiBase.headers() })
+      .map(response => response.json())
   }
 }

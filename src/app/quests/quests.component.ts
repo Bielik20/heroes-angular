@@ -3,6 +3,7 @@ import { Router } from '@angular/router'
 
 import { Quest } from '../_models/quest';
 import { QuestService } from '../_services/quest.service';
+import { AlertService } from '../_services/alert.service';
 
 @Component({
   selector: 'my-quests',
@@ -15,7 +16,7 @@ export class QuestsComponent implements OnInit, OnChanges {
   hero_id?: number;
   quests: Quest[];
 
-  constructor(private questService: QuestService) { }
+  constructor(private questService: QuestService, private alertService: AlertService) { }
 
   ngOnInit() {
     if (this.hero_id == null)
@@ -29,12 +30,18 @@ export class QuestsComponent implements OnInit, OnChanges {
 
   getQuests(): void {
     this.questService.getAll()
-      .then(quests => this.quests = quests);
+      .subscribe(
+        quests => this.quests = quests,
+        error => this.alertService.handleError(error)
+      );
   }
 
   getOwnedByHero(hero_id: number): void {
     this.questService.getOwnedByHero(hero_id)
-      .then(quests => this.quests = quests);
+      .subscribe(
+        quests => this.quests = quests,
+        error => this.alertService.handleError(error)
+      );
   }
 
 }
