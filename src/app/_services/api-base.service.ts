@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
-import { AlertService } from '../_services/alert.service';
 
 import 'rxjs/add/operator/toPromise';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ApiBaseService {
@@ -13,18 +13,7 @@ export class ApiBaseService {
       'Authorization': this.getAccessToken()
     });
 
-  constructor(private alertService: AlertService) { }
-
-  public handleError(error: any): Promise<any> {
-    console.error('An error occurred', error); // for demo purposes only
-    switch(error.status) {
-      case 401: 
-        this.alertService.error("Something went wrong");
-        break;
-    }
-
-    return Promise.reject(error.message || error);
-  }
+  constructor() { }
 
   private getAccessToken(): string {
       let user = JSON.parse(localStorage.getItem('currentUser'));

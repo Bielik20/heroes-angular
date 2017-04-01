@@ -23,6 +23,15 @@ export class AlertService {
         });
     }
 
+    handleError(error: any) {
+        switch (error.status) {
+            case 401:
+                this.error("Something went wrong", true);
+                this.router.navigate(['/login']);
+                break;
+        }
+    }
+
     success(message: string, keepAfterNavigationChange = false) {
         this.keepAfterNavigationChange = keepAfterNavigationChange;
         this.subject.next({ type: 'success', text: message });
