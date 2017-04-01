@@ -7,17 +7,17 @@ import 'rxjs/add/operator/map';
 import { ApiBaseService } from './api-base.service';
 
 @Injectable()
-export class AuthenticationService extends ApiBaseService {
+export class AuthenticationService {
     private user = new Subject<User>();
-    private accountUrl = this.apiUrl + '/account';
+    private accountUrl = this.apiBase.apiUrl + '/account';
 
-    constructor(private http: Http) { super(); }
+    constructor(private http: Http, private apiBase: ApiBaseService) { }
 
     login(username: string, password: string) {
         return this.http
             .post(this.accountUrl + '/login', 
                 JSON.stringify({ username: username, password: password }),
-                { headers: this.headers() })
+                { headers: this.apiBase.headers() })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let user = response.json();

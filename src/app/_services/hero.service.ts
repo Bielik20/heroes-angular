@@ -8,48 +8,48 @@ import { Hero } from '../_models/hero';
 import { ApiBaseService } from './api-base.service';
 
 @Injectable()
-export class HeroService extends ApiBaseService {
+export class HeroService {
 
-  private heroesUrl = this.apiUrl + '/heroes';  // URL to web api
+  private heroesUrl = this.apiBase.apiUrl + '/heroes';  // URL to web api
 
-  constructor(private http: Http) { super(); }
+  constructor(private http: Http, private apiBase: ApiBaseService) { }
 
   getHeroes(): Promise<Hero[]> {
-    return this.http.get(this.heroesUrl, { headers: this.headers() })
+    return this.http.get(this.heroesUrl, { headers: this.apiBase.headers() })
       .toPromise()
       .then(response => response.json())
-      .catch(this.handleError);
+      .catch(this.apiBase.handleError);
   }
 
   getHero(id: number): Promise<Hero> {
     const url = `${this.heroesUrl}/${id}`;
-    return this.http.get(url, { headers: this.headers() })
+    return this.http.get(url, { headers: this.apiBase.headers() })
       .toPromise()
       .then(response => response.json())
-      .catch(this.handleError);
+      .catch(this.apiBase.handleError);
   }
 
   update(hero: Hero): Promise<Hero> {
     return this.http
-      .put(this.heroesUrl, JSON.stringify(hero), { headers: this.headers() })
+      .put(this.heroesUrl, JSON.stringify(hero), { headers: this.apiBase.headers() })
       .toPromise()
       .then(() => hero)
-      .catch(this.handleError);
+      .catch(this.apiBase.handleError);
   }
 
   create(name: string): Promise<Hero> {
     return this.http
-      .post(this.heroesUrl, JSON.stringify({ name: name }), { headers: this.headers() })
+      .post(this.heroesUrl, JSON.stringify({ name: name }), { headers: this.apiBase.headers() })
       .toPromise()
       .then(res => res.json())
-      .catch(this.handleError);
+      .catch(this.apiBase.handleError);
   }
 
   delete(id: number): Promise<void> {
     const url = `${this.heroesUrl}/${id}`;
-    return this.http.delete(url, { headers: this.headers() })
+    return this.http.delete(url, { headers: this.apiBase.headers() })
       .toPromise()
       .then(() => null)
-      .catch(this.handleError);
+      .catch(this.apiBase.handleError);
   }
 }
