@@ -4,19 +4,24 @@ import { User } from '../_models/user';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
+import { ApiBaseService } from './api-base.service';
 
 @Injectable()
-export class AuthenticationService {
+export class AuthenticationService extends ApiBaseService {
     private user = new Subject<User>();
+    private accountUrl = this.apiUrl + '/account';
 
-    constructor(private http: Http) { }
+    constructor(private http: Http) { super(); }
 
     login(username: string, password: string) {
-        return this.http.post('/api/authenticate', JSON.stringify({ username: username, password: password }))
+        return this.http
+            .post(this.accountUrl + '/login', 
+                JSON.stringify({ username: username, password: password }),
+                { headers: this.headers() })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let user = response.json();
-                if (user && user.token) {
+                if (user && user.accessToken) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.user.next(user);

@@ -7,15 +7,16 @@ import { AlertModule, DatepickerModule } from 'ng2-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './_guards/auth.guard';
 
-// Imports for loading & configuring the in-memory web api
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from './_helpers/in-memory-data.service';
+// // Imports for loading & configuring the in-memory web api
+// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+// import { InMemoryDataService } from './_helpers/in-memory-data.service';
 
-// used to create fake backend
-import { fakeBackendProvider } from './_helpers/fake-backend';
-import { MockBackend, MockConnection } from '@angular/http/testing';
-import { BaseRequestOptions } from '@angular/http';
+// // used to create fake backend
+// import { fakeBackendProvider } from './_helpers/fake-backend';
+// import { MockBackend, MockConnection } from '@angular/http/testing';
+// import { BaseRequestOptions } from '@angular/http';
 
+import { ApiBaseService } from './_services/api-base.service';
 import { AuthenticationService } from './_services/authentication.service';
 import { AlertService } from './_services/alert.service';
 import { HeroService } from './_services/hero.service';
@@ -54,7 +55,7 @@ import { UserComponent } from './user/user.component';
     HttpModule,
     
     // loading & configuring the in-memory web api
-    InMemoryWebApiModule.forRoot(InMemoryDataService),
+    // InMemoryWebApiModule.forRoot(InMemoryDataService),
 
     AppRoutingModule,
     AlertModule.forRoot(),
@@ -62,6 +63,7 @@ import { UserComponent } from './user/user.component';
   ],
   providers: [
     AuthGuard,
+    ApiBaseService,
     AuthenticationService,
     AlertService,
     HeroService, 
@@ -69,9 +71,9 @@ import { UserComponent } from './user/user.component';
     UserService,
 
     // providers used to create fake backend
-    fakeBackendProvider,
-    MockBackend,
-    BaseRequestOptions
+    // fakeBackendProvider,
+    // MockBackend,
+    // BaseRequestOptions
     ],
   bootstrap: [AppComponent]
 })
