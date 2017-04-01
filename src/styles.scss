@@ -1,0 +1,37 @@
+/* Master Styles */
+h1 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}
+h2, h3 {
+  color: #444;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+body {
+  margin: 2em;
+}
+body, input[text], button {
+  color: #888;
+  font-family: Cambria, Georgia;
+}
+/* . . . */
+/* everywhere else */
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+@import "variables";
+@import "/app/app.component";
+
+my-dashboard { @import "/app/dashboard/dashboard.component"; }
+my-hero-detail { @import "/app/hero-detail/hero-detail.component"; }
+hero-search { @import "/app/hero-search/hero-search.component"; }
+my-heroes { @import "/app/heroes/heroes.component"; }
+my-quests { @import "/app/quests/quests.component"; }
+app-user { @import "/app/user/user.component"; }

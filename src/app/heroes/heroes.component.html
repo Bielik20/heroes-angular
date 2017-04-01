@@ -1,0 +1,34 @@
+<h2>My Heroes</h2>
+
+<form class="form-inline">
+  <div class="form-group">
+    <label>Hero name:</label>
+    <input #heroName class="form-control">
+  </div>
+  <button (click)="add(heroName.value); heroName.value=''" class="form-control">
+    Add
+  </button>
+</form>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Hero Id</th>
+      <th>Hero Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero">
+      <td><span class="badge">{{hero.id}}</span></td>
+      <td>{{hero.name}}</td>
+      <td><span class="glyphicon glyphicon-remove text-danger" (click)="delete(hero); $event.stopPropagation()"></span></td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="selectedHero" class="jumbotron text-center">
+  <h2>{{selectedHero.name | uppercase}}</h2>
+  <p>is my hero</p>
+    <button (click)="gotoDetail()" type="button" class="btn btn-danger">View Details</button>
+</div>

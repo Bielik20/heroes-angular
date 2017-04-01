@@ -1,0 +1,9 @@
+<ul *ngIf="loggedUser == null" class="nav navbar-nav navbar-right">
+    <li><a routerLink="/register" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+    <li><a routerLink="/login" routerLinkActive="active"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+</ul>
+
+<ul *ngIf="loggedUser" class="nav navbar-nav navbar-right">
+    <li><a routerLink="/user" routerLinkActive="active"><span class="glyphicon glyphicon-user"></span> {{loggedUser.username}}</a></li>
+    <li><a routerLink="/login" routerLinkActive="active"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+</ul>

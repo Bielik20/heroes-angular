@@ -1,0 +1,20 @@
+<h2>Quests</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>hero_id</th>
+      <th>title</th>
+      <th>completed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let quest of quests">
+      <td>{{quest.id}}</td>
+      <td>{{quest.hero_id}}</td>
+      <td>{{quest.title}}</td>
+      <td>{{quest.completed}}</td>
+    </tr>
+  </tbody>
+</table>

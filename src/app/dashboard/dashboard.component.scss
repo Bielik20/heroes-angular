@@ -1,0 +1,7 @@
+.panel {
+  box-shadow: $small-shadow;
+  cursor: pointer;
+}
+.panel:hover {
+  box-shadow: $big-shadow;
+}

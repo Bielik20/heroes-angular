@@ -1,0 +1,10 @@
+<form class="navbar-form navbar-left">
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search" #searchBox id="search-box" (keyup)="search(searchBox.value)">
+  </div>
+  <div class="result-box">
+    <div *ngFor="let hero of heroes | async" (click)="gotoDetail(hero); searchBox.value=''" class="search-result">
+      {{hero.name}}
+    </div>
+  </div>
+</form>

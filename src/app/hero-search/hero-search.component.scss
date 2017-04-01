@@ -1,0 +1,18 @@
+.result-box {
+  position:absolute;
+  z-index: 1000;
+}
+
+.search-result{
+  width:170px;
+  height: 25px;
+  padding: 3px 12px;
+  margin: 1px 0px 1px 1px;
+  background-color: white;
+  cursor: pointer;
+  box-shadow: $small-shadow;
+}
+
+hero-search .form-group {
+  margin: 0px !important;
+}
