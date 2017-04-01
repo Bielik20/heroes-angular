@@ -24,12 +24,15 @@ export class AlertService {
     }
 
     handleError(error: any) {
-        switch (error.status) {
-            case 401:
-                this.error("Something went wrong", true);
-                this.router.navigate(['/login']);
-                break;
+        try {
+            switch (error.status) {
+                case 401:
+                    this.error("You are Unauthorized, please login", true);
+                    this.router.navigate(['/login']);
+                    break;
+            }
         }
+        catch (e) { console.log(e) }
     }
 
     success(message: string, keepAfterNavigationChange = false) {

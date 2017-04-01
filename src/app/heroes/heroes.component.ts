@@ -4,6 +4,7 @@ import { Router } from '@angular/router'
 
 import { Hero } from '../_models/hero'
 import { HeroService } from '../_services/hero.service'
+import { AlertService } from '../_services/alert.service'
 
 @Component({
   selector: 'my-heroes',
@@ -16,7 +17,8 @@ export class HeroesComponent implements OnInit {
 
   constructor(
     private heroService: HeroService,
-    private router: Router,) { }
+    private router: Router,
+    private alertService: AlertService) { }
 
   ngOnInit() {
     this.getHeroes();
@@ -28,7 +30,10 @@ export class HeroesComponent implements OnInit {
 
   getHeroes(): void {
     this.heroService.getHeroes()
-      .then(heroes => this.heroes = heroes)
+      .subscribe(
+        heroes => this.heroes = heroes,
+        error => this.alertService.handleError(error)
+      )
   }
 
   gotoDetail(): void {
@@ -39,18 +44,23 @@ export class HeroesComponent implements OnInit {
     name = name.trim();
     if (!name) { return; }
     this.heroService.create(name)
-      .then(hero => {
-        this.heroes.push(hero);
-        this.selectedHero = null;
-      });
+      .subscribe(
+        hero => {
+          this.heroes.push(hero);
+          this.selectedHero = null;
+        },
+        error => this.alertService.handleError(error)
+      );
   }
 
   delete(hero: Hero): void {
     this.heroService
       .delete(hero.id)
-      .then(() => {
-        this.heroes = this.heroes.filter(h => h !== hero);
-        if (this.selectedHero === hero) { this.selectedHero = null; }
-      });
+      .subscribe(() => {
+          this.heroes = this.heroes.filter(h => h !== hero);
+          if (this.selectedHero === hero) { this.selectedHero = null; }
+        },
+        error => this.alertService.handleError(error)
+      );
   }
 }

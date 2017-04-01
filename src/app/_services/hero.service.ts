@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import { Hero } from '../_models/hero';
@@ -14,42 +14,32 @@ export class HeroService {
 
   constructor(private http: Http, private apiBase: ApiBaseService) { }
 
-  getHeroes(): Promise<Hero[]> {
+  getHeroes(): Observable<Hero[]> {
     return this.http.get(this.heroesUrl, { headers: this.apiBase.headers() })
-      .toPromise()
-      .then(response => response.json())
-      .catch(this.apiBase.handleError);
+      .map(response => response.json())
   }
 
-  getHero(id: number): Promise<Hero> {
+  getHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.get(url, { headers: this.apiBase.headers() })
-      .toPromise()
-      .then(response => response.json())
-      .catch(this.apiBase.handleError);
+      .map(response => response.json())
   }
 
-  update(hero: Hero): Promise<Hero> {
+  update(hero: Hero): Observable<Hero> {
     return this.http
       .put(this.heroesUrl, JSON.stringify(hero), { headers: this.apiBase.headers() })
-      .toPromise()
-      .then(() => hero)
-      .catch(this.apiBase.handleError);
+      .map(() => hero)
   }
 
-  create(name: string): Promise<Hero> {
+  create(name: string): Observable<Hero> {
     return this.http
       .post(this.heroesUrl, JSON.stringify({ name: name }), { headers: this.apiBase.headers() })
-      .toPromise()
-      .then(res => res.json())
-      .catch(this.apiBase.handleError);
+      .map(res => res.json())
   }
 
-  delete(id: number): Promise<void> {
+  delete(id: number): Observable<void> {
     const url = `${this.heroesUrl}/${id}`;
     return this.http.delete(url, { headers: this.apiBase.headers() })
-      .toPromise()
-      .then(() => null)
-      .catch(this.apiBase.handleError);
+      .map(() => null)
   }
 }
