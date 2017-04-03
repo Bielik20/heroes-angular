@@ -8,7 +8,7 @@ The original standalone version of this app, that uses in-memory-api and fake-ba
 
 - node v7.7.3
 - npm v4.1.2
-- ng v1.0.0-rc.4
+- ng v1.0.0
 
 To manage different node versions use [nvm](https://github.com/creationix/nvm)
 
@@ -16,7 +16,7 @@ On clean system install nvm and:
 ```
 nvm install 7.7.3
 nvm use 7.7.3
-npm install -g @angular/cli@1.0.0-rc.4
+npm install -g @angular/cli@1.0.0
 ```
 
 To start application simply run `ng serve`.

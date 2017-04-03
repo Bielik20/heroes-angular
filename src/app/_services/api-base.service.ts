@@ -10,7 +10,8 @@ export class ApiBaseService {
   public apiUrl = 'http://localhost:5000/api';  // URL to web api
   public headers = () => new Headers({ 
       'Content-Type': 'application/json',
-      'Authorization': this.getAccessToken()
+      'Authorization': this.getAccessToken(),
+      'Allow-Control-Allow-Origin': '*'     //For CORS problems
     });
 
   constructor() { }
